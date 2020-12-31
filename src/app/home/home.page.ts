@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RemoteService } from '../services/remote.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,19 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  postList:any;
 
+  constructor(public remoteService : RemoteService) {
+    this.postList = [];
+  }
+
+  ionViewWillEnter(){
+    this.getPosts();
+  }
+
+  getPosts(){
+    this.remoteService.getPosts().subscribe((data) =>{
+      this.postList = data;
+    });
+  }
 }
